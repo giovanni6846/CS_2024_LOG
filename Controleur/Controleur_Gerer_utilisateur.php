@@ -2,6 +2,7 @@
 
 use App\Modele\Modele_categorie_utilisateur;
 use App\Modele\Modele_Utilisateur;
+use App\Modele\Singleton_Logger;
 use App\Vue\Vue_AfficherMessage;
 use App\Vue\Vue_Menu_Administration;
 use App\Vue\Vue_Structure_BasDePage;
@@ -70,6 +71,7 @@ switch ($action) {
             //Créer sur la fiche de création d'une utilisateurs
             Modele_Utilisateur::Utilisateur_Creer($_REQUEST["login"], "secret", $_REQUEST["codeCategorie"]);
             //Redirect_Self_URL();
+            Singleton_Logger::getInstance()->notice('Création nouvelle utilisateur: ' . $_REQUEST["login"] . ' Catégorie: ' . $_REQUEST["codeCategorie"], );
             $listeUtilisateur = Modele_Utilisateur:: Utilisateur_Select_Cafe();
             $Vue->addToCorps(new Vue_Utilisateur_Liste($listeUtilisateur, "Utilisateur créé"));
         }

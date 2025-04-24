@@ -3,6 +3,7 @@
 use App\Modele\Modele_Entreprise;
 use App\Modele\Modele_Salarie;
 use App\Modele\Modele_Utilisateur;
+use App\Modele\Singleton_Logger;
 use App\Vue\Vue_Connexion_Formulaire_client;
 use App\Vue\Vue_Mail_Confirme;
 use App\Vue\Vue_Mail_ReinitMdp;
@@ -40,7 +41,7 @@ switch ($action) {
                 if ($utilisateur["desactiver"] == 0) {
                     if ($_REQUEST["password"] == $utilisateur["motDePasse"]) {
                         $_SESSION["idUtilisateur"] = $utilisateur["idUtilisateur"];
-                        //error_log("idUtilisateur : " . $_SESSION["idUtilisateur"]);
+                        Singleton_Logger::getInstance()->info("Connexion idUtilisateur : " . $_SESSION["idUtilisateur"]);
                         $_SESSION["idCategorie_utilisateur"] = $utilisateur["idCategorie_utilisateur"];
                         //error_log("idCategorie_utilisateur : " . $_SESSION["idCategorie_utilisateur"]);
                         switch ($utilisateur["idCategorie_utilisateur"]) {
@@ -68,9 +69,8 @@ switch ($action) {
 
                     } else {//mot de passe pas bon
                         $msgError = "Mot de passe erroné";
-
+                        Singleton_Logger::getInstance()->error('Erreur de connexion utilisateur id: ' . $_REQUEST["compte"], );
                         $Vue->addToCorps(new Vue_Connexion_Formulaire_client($msgError));
-
                     }
                 } else {
                     $msgError = "Compte désactivé";
