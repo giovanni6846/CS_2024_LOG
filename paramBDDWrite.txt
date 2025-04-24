@@ -1,0 +1,4 @@
+IPBDD 127.0.0.1
+BDD supervision_logs
+USERBDD Writer
+MDPBDD Writter68210

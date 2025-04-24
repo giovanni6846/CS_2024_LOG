@@ -1,17 +1,17 @@
 <?php
 
+use App\Log\Singleton_Logger;
 use App\Modele\Modele_Entreprise;
 use App\Modele\Modele_Salarie;
 use App\Modele\Modele_Utilisateur;
-use App\Modele\Singleton_Logger;
 use App\Vue\Vue_Connexion_Formulaire_client;
 use App\Vue\Vue_Mail_Confirme;
 use App\Vue\Vue_Mail_ReinitMdp;
 use App\Vue\Vue_Menu_Administration;
 use App\Vue\Vue_Structure_BasDePage;
 use App\Vue\Vue_Structure_Entete;
-
 use PHPMailer\PHPMailer\PHPMailer;
+
 //Ce contrôleur gère le formulaire de connexion pour les visiteurs
 
 $Vue->setEntete(new Vue_Structure_Entete());
@@ -35,15 +35,17 @@ switch ($action) {
             //Si tous les paramètres du formulaire sont bons
 
             $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["compte"]);
-
+            $type = "Requete Selection User pour connexion";
+            $action = 1;
+            include "Controleur/Controleur_Logs.php";
             if ($utilisateur != null) {
                 //error_log("utilisateur : " . $utilisateur["idUtilisateur"]);
                 if ($utilisateur["desactiver"] == 0) {
                     if ($_REQUEST["password"] == $utilisateur["motDePasse"]) {
                         $_SESSION["idUtilisateur"] = $utilisateur["idUtilisateur"];
-                        Singleton_Logger::getInstance()->info("Connexion idUtilisateur : " . $_SESSION["idUtilisateur"]);
                         $_SESSION["idCategorie_utilisateur"] = $utilisateur["idCategorie_utilisateur"];
-                        //error_log("idCategorie_utilisateur : " . $_SESSION["idCategorie_utilisateur"]);
+                        $_SESSION["login"] = $_REQUEST["compte"];
+                        Singleton_Logger::getInstance()->info("Connexion idUtilisateur : " . $_SESSION["idUtilisateur"]);
                         switch ($utilisateur["idCategorie_utilisateur"]) {
                             case 1:
                                 $_SESSION["typeConnexionBack"] = "administrateurLogiciel"; //Champ inutile, mais bien pour voir ce qu'il se passe avec des étudiants !

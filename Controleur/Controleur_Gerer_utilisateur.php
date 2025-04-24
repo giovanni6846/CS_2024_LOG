@@ -1,8 +1,8 @@
 <?php
 
+use App\Log\Singleton_Logger;
 use App\Modele\Modele_categorie_utilisateur;
 use App\Modele\Modele_Utilisateur;
-use App\Modele\Singleton_Logger;
 use App\Vue\Vue_AfficherMessage;
 use App\Vue\Vue_Menu_Administration;
 use App\Vue\Vue_Structure_BasDePage;

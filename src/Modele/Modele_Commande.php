@@ -26,6 +26,9 @@ class Modele_Commande
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
         //  var_dump($tableauReponse);
         //  var_dump($idEntreprise);
+        $type = "Requete Selection Commande";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         return $tableauReponse;
     }
 
@@ -51,6 +54,9 @@ class Modele_Commande
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
         //  var_dump($tableauReponse);
         //  var_dump($idEntreprise);
+        $type = "Requete Selection Commande";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         return $tableauReponse;
     }
 
@@ -76,6 +82,9 @@ class Modele_Commande
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
         //  var_dump($tableauReponse);
         //  var_dump($idEntreprise);
+        $type = "Requete Selection Commande";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         return $tableauReponse;
     }
 
@@ -90,6 +99,9 @@ class Modele_Commande
         $requetePreparee->bindValue('idEntreprise', $idEntreprise);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
+        $type = "Requete Selection Caddie";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         if (count($tableauReponse) == 1)
             return $tableauReponse[0];
         return false;
@@ -111,6 +123,9 @@ order by HEC.dateHeure desc
         $requetePreparee->bindValue('idCommande', $idCommande);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
+        $type = "Requete Selection Historique Etat Commande";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         /*   var_dump($idProduit, $idCommande);
            var_dump($tableauReponse);*/
         if (count($tableauReponse) >= 1)
@@ -132,6 +147,9 @@ order by HEC.dateHeure desc
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
         /*   var_dump($idProduit, $idCommande);
            var_dump($tableauReponse);*/
+        $type = "Requete Selection Commande";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         if (count($tableauReponse) >= 1)
             return $tableauReponse[0];
         return false;
@@ -180,6 +198,7 @@ order by HEC.dateHeure desc
         if (count($tableauReponse) >= 1)
             return $tableauReponse[0];
         return false;
+
     }
 
     static function CommandeAvoirArticle_SupprimerArticle($idCommande, $idProduit)
@@ -192,6 +211,9 @@ order by HEC.dateHeure desc
         $requetePreparee->bindParam('idCommande', $idCommande);
         $requetePreparee->bindParam('idProduit', $idProduit);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        $type = "Requete Ecriture Panier";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
         //echo $reponse;
     }
 
@@ -207,6 +229,9 @@ order by HEC.dateHeure desc
         $requetePreparee->bindParam('idProduit', $idProduit);
         $requetePreparee->bindParam('quantite', $quantite);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        $type = "Requete Ecriture Panier";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
         //echo $reponse;
     }
 
@@ -223,6 +248,9 @@ order by HEC.dateHeure desc
         $requetePreparee->bindParam('prixVenteHT', $produit["prixVenteHT"]);
         $requetePreparee->bindParam('pourcentageTVA', $produit["pourcentageTVA"]);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        $type = "Requete Ecriture Commande";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
     }
 
     static function Panier_Ajouter_Produit_ParIdProduit($idEntreprise, $idProduit)
@@ -258,6 +286,9 @@ order by HEC.dateHeure desc
             self::CommandeAvoirArticle_ChangerQuantite($idPanier, $idProduit, $article["quantite"] + 1);
 
         }
+        $type = "Requete Ecriture Panier";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
 
     }
 
@@ -280,6 +311,9 @@ order by HEC.dateHeure desc
                 }
             }
         }
+        $type = "Requete Ecriture Panier";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
 
     }
 
@@ -296,6 +330,9 @@ order by HEC.dateHeure desc
 
             self::CommandeAvoirArticle_ChangerQuantite($idPanier, $idProduit, $article["quantite"] + 1);
         }
+        $type = "Requete Ecriture Panier";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
     }
 
     static function Panier_ListeArticle($idEntreprise)
@@ -327,6 +364,9 @@ order by HEC.dateHeure desc
             }
             return $cnt;
         }
+        $type = "Requete Quantité Article";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
     }
 
     static function HistoriqueEtatCommande_Inserer($idCommande, $etat, $infoComplementaire = "", $idSalarie = -1, $idUtilisateur = -1)
@@ -347,6 +387,9 @@ order by HEC.dateHeure desc
 
 
         $reponse = $requetePreparee->execute();
+        $type = "Requete Ecriture Historique Etat Commande";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
     }
 
 
@@ -362,6 +405,9 @@ order by HEC.dateHeure desc
         $requetePreparee->bindParam('etat', $etat);
 
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        $type = "Requete Ecriture Etat Commande";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
     }
 
     static function Commande_Valider_Caddie($idCommande, $idSalarie)

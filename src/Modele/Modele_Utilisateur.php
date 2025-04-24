@@ -20,6 +20,9 @@ class Modele_Utilisateur
         order by login');
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
         $tableauReponse = $requetePreparee->fetchAll(PDO::FETCH_ASSOC);
+        $type = "Requete Selection User";
+        $action = 1;
+        include "Controleur/Controleur_Logs.php";
         return $tableauReponse;
     }
 
@@ -92,6 +95,9 @@ class Modele_Utilisateur
             $desactiver = 0;
             self::Utilisateur_Modifier_Desactivation($idUtilisateur, $desactiver);
             self::Utilisateur_Modifier_motDePasse($idUtilisateur, $motDePasse);
+            $type = "Requete Creation User";
+            $action = 2;
+            include "Controleur/Controleur_Logs.php";
             return $idUtilisateur;
         }
         return false;
@@ -109,6 +115,9 @@ class Modele_Utilisateur
         $requetePreparee = $connexionPDO->prepare('delete utilisateur.* from `utilisateur` where idUtilisateur = :paramId');
         $requetePreparee->bindParam('paramId', $idUtilisateur);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        $type = "Requete Suppression User";
+        $action = 3;
+        include "Controleur/Controleur_Logs.php";
         return $reponse;
     }
 
@@ -132,8 +141,9 @@ WHERE idUtilisateur = :paramidUtilisateur');
         $requetePreparee->bindParam('paramidCategorie_utilisateur', $idCodeCategorie);
         $requetePreparee->bindParam('paramidUtilisateur', $idUtilisateur);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
-
-
+        $type = "Requete Modification User";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
         return $reponse;
     }
 
@@ -171,6 +181,9 @@ WHERE idUtilisateur = :paramidUtilisateur');
         $requetePreparee->bindParam('parammotDePasse', $motDePasse);
         $requetePreparee->bindParam('paramidUtilisateur', $idUtilisateur);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        $type = "Requete Modification MDP";
+        $action = 2;
+        include "Controleur/Controleur_Logs.php";
         return $reponse;
     }
 
